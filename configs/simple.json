@@ -1,0 +1,46 @@
+﻿{
+  // ============================================================
+  //  GD32Cube 最小示例：LED 闪烁 + 串口 printf 打印
+  //  改这个文件里的配置，重新生成，就是你要的初始化代码。
+  //  每段注释都说明"这段是干嘛的"。
+  // ============================================================
+
+  "project": {
+    "name": "led_uart_demo",   // 工程名（仅用于备注，不影响生成）
+    "mcu": "GD32F407",         // 你的芯片型号
+    "clock": {
+      // ---- 系统时钟（时钟树）----
+      "source": "HXTAL",       // 用外部晶振（8M 那颗）
+      "hxtal_mhz": 8,          // 晶振频率 8MHz
+      "sysclk_mhz": 168,       // 想跑到 168MHz（GD32F407 最高）
+      "ahb_prescaler": 1,      // AHB 不分频
+      "apb1_prescaler": 4,     // APB1 = 168/4 = 42MHz
+      "apb2_prescaler": 2      // APB2 = 168/2 = 84MHz
+      // PLL 倍频参数不用填，工具自动算
+    },
+    "systick": { "enabled": true }   // 1ms 延时（delay_1ms 靠它）
+  },
+
+  "gpio": {
+    // ---- 我要用的普通引脚 ----
+    "outputs": [
+      { "port": "A", "pin": 5, "label": "LED0",   // PA5 接 LED
+        "speed": "GPIO_OSPEED_50MHZ", "init_level": "LOW" }
+    ],
+    "inputs":  [],
+    "analog":  []
+  },
+
+  "usart": {
+    // ---- 串口0：PA9=TX, PA10=RX，波特率115200 ----
+    "usart0": {
+      "baudrate": 115200,
+      "tx_pin": "PA9",
+      "rx_pin": "PA10",
+      "printf": true        // 让 printf() 直接从这个串口输出
+    }
+  }
+  // 其它外设不写 = 不启用
+}
+
+
